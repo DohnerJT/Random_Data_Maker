@@ -1,5 +1,6 @@
 
 import random
+import csv
 
 #First name Pool 50
 nameFirstMale = [
@@ -133,15 +134,31 @@ baseYear = 2018
 #Table Column names
 fNameColumn = "First_Name"
 lNameColumn = "Last_Name"
+dateBirthData = "DOB"
 dateColumn = "Date"
-SNNColumn = "SNN"
+SSNColumn = "SNN"
+
+#Taple
+tableName = "Test1"
+tableHeader = []
+tableData = []
 
 def main():
+    header = [fNameColumn, lNameColumn, dateBirthData, SSNColumn, dateColumn]
+    tableData.append(header)
 
     for x in range(20):        
        dateData = MakeDate()      
        nameData = MakeName()
-       
+       SSNData = MakeSSN()
+       BirthdayData = MakeAge()
+
+       row = [nameData[0], nameData[1],  BirthdayData, SSNData, dateData]
+       tableData.append(row)
+
+    WrightToFile()
+    #print(tableHeader)
+    #print(tableData)
        
 
 def MakeDate():
@@ -178,6 +195,49 @@ def MakeName():
 
     return name
 
+def MakeSSN():
+    return str(RandomeIndex(999)) + "-" + str(RandomeIndex(99)) + "-" + str(RandomeIndex(9999))
+
+def MakeAge():
+    age = RandomeIndex(88)
+
+    #Get Year
+    if age == 5:
+        year = baseYear
+    elif age < 5:
+        year = baseYear + (5-age)
+    else:
+        year = baseYear - (age - 5)
+    
+    #Get Month
+    month = RandomeIndex(12)
+    #Get Day
+
+    if month ==2:
+
+        if year%4 ==0:
+            day = RandomeIndex(29)
+        else:
+            day = RandomeIndex(28)
+    elif month%2 == 0:
+        day = RandomeIndex(30)
+
+    else:
+        day = RandomeIndex(31)
+
+    return str(month) + "/" + str(day) + "/" + str(year)
+
+def WrightToFile():
+
+    with open((tableName+".csv"), 'w', newline='') as file:
+        writer = csv.writer(file)
+
+        #writer.writerow(tableHeader)
+
+        for x in tableData:
+            writer.writerow(x)
+    
+        
 
 
 def RandomeIndex(max):
