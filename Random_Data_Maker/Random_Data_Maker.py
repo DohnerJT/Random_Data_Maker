@@ -2,7 +2,9 @@
 import random
 import csv
 
-#First name Pool 50
+import DateMake
+
+#First name Pool's 50
 nameFirstMale = [
  "Liam"
 ,"Noah"
@@ -139,46 +141,29 @@ dateColumn = "Date"
 SSNColumn = "SNN"
 
 #Taple
-tableName = "Test1"
-tableHeader = []
+rowCount = 73 #Number of iterations of data
+tableName = "Test2" #File Name
 tableData = []
 
 def main():
+    #Table Header Column Names
     header = [fNameColumn, lNameColumn, dateBirthData, SSNColumn, dateColumn]
     tableData.append(header)
 
-    for x in range(20):        
-       dateData = MakeDate()      
+    #Creates Data
+    for x in range(rowCount):        
+       dateData = DateMake.MakeDate()      
        nameData = MakeName()
        SSNData = MakeSSN()
        BirthdayData = MakeAge()
 
        row = [nameData[0], nameData[1],  BirthdayData, SSNData, dateData]
+       #print(BirthdayData)
        tableData.append(row)
 
     WrightToFile()
-    #print(tableHeader)
-    #print(tableData)
-       
-
-def MakeDate():
-    year = baseYear + RandomeIndex(5)
-    month = RandomeIndex(12)
-
-    if month == 2:
-        if year%4 == 0:
-            day = RandomeIndex(29)
-        else:
-            day = RandomeIndex(28)
-
-    elif month%2 == 0:
-        day = RandomeIndex(30)
-
-    else:
-        day = RandomeIndex(31)
-
-
-    return str(month)+"/"+str(day)+"/"+str(year)
+    
+    #print(tableData)       
 
 def MakeName():
     male_female = RandomeIndex(2)
@@ -198,6 +183,9 @@ def MakeName():
 def MakeSSN():
     return str(RandomeIndex(999)) + "-" + str(RandomeIndex(99)) + "-" + str(RandomeIndex(9999))
 
+#Birthday maker
+
+# MM/DD/YYYY
 def MakeAge():
     age = RandomeIndex(88)
 
@@ -225,7 +213,18 @@ def MakeAge():
     else:
         day = RandomeIndex(31)
 
-    return str(month) + "/" + str(day) + "/" + str(year)
+    #parse to String and Add Leading 0's
+    month = str(month)
+    if len(month) <2:
+        month = "0"+month
+
+    day = str(day)
+    if len(day)<2:
+        day = "0"+day
+    year = str(year)
+
+    date = month+"/"+day+"/"+year
+    return date
 
 def WrightToFile():
 
