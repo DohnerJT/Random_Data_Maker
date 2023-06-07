@@ -133,6 +133,37 @@ nameLast = ["Smith"
 #Base Year for calculating
 baseYear = 2018
 
+#Date formating Veriables
+
+# a: 4 digit or 2 digit Year
+# + = YYYY
+# - = YY
+a = "+"
+
+# b: Date value order 
+# 1 = M D Y
+# 2 = D M Y
+# 3 = Y M D 
+b = "3"
+
+# c: leding or no neding 0's
+# + = Leading 0's
+# - + no Leading 0's
+c = "+"
+
+# d: number, Abreveated, or full month name
+# 1 = MM
+# 2 = Mon
+# 3 = Month
+d = "2"
+
+# e: Dilimited or not
+# + = Dilimited "/", ",", " "
+# - = no Dilimiting
+e = "+"
+
+dateFormat = a+b+c+d+e #(a)(b)(c)(d)
+
 #Table Column names
 fNameColumn = "First_Name"
 lNameColumn = "Last_Name"
@@ -141,7 +172,7 @@ dateColumn = "Date"
 SSNColumn = "SNN"
 
 #Taple
-rowCount = 73 #Number of iterations of data
+rowCount = 20 #Number of iterations of data
 tableName = "Test2" #File Name
 tableData = []
 
@@ -152,14 +183,14 @@ def main():
 
     #Creates Data
     for x in range(rowCount):        
-       dateData = DateMake.MakeDate()      
-       nameData = MakeName()
-       SSNData = MakeSSN()
-       BirthdayData = MakeAge()
-
-       row = [nameData[0], nameData[1],  BirthdayData, SSNData, dateData]
-       #print(BirthdayData)
-       tableData.append(row)
+       dateData = DateMake.MakeDate(dateFormat)    
+       BirthdayData = DateMake.MakeAge(dateFormat)
+       #nameData = MakeName()
+       #SSNData = MakeSSN()
+       
+       print("Event Date: " + dateData)
+       print("Birth Date: " + BirthdayData + "\n")
+       #tableData.append(row)
 
     WrightToFile()
     
